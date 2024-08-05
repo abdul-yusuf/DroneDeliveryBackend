@@ -15,7 +15,7 @@ class OrderDetailView(generics.RetrieveAPIView):
 
 class OrderListView(generics.ListAPIView):
     # queryset = Order.objects.all()
-    serializer_class = serializers.OrderResponseSerializer
+    serializer_class = serializers.OrderListSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):

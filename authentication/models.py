@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+
+
 # Create your models here.
 
 class CustomUserManager(BaseUserManager):
@@ -59,11 +61,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name = 'User'
         verbose_name_plural = "User's"
 
+
 class Otp(models.Model):
     email = models.EmailField(unique=True)
     pin = models.CharField(max_length=6, unique=True)
     created_at = models.DateTimeField(default=timezone.now)
-    expired_at = models.DateTimeField()
+    expired_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"OTP for {self.email}"

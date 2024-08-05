@@ -90,8 +90,9 @@ class OTPVerifyView(generics.GenericAPIView):
     def post(self, request, *args, **kwargs):
         user = request.data.get('email')
         otp = request.data.get('pin')
+        print(user, otp)
         try:
-            otp_obj = models.Otp.objects.get(email=user, pin=otp, expired_at__gte=timezone.now())
+            otp_obj = models.Otp.objects.get(email=user, pin=int(otp), expired_at__gte=timezone.now())
             user = models.User.objects.get(email=user)
             user.is_active = True
             otp_obj.delete()
