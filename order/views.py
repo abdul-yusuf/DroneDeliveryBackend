@@ -26,18 +26,6 @@ class OrderListView(generics.ListAPIView):
         user = self.request.user
         return Order.objects.filter(user=user)
 
-    # def get(self, request, *args, **kwargs):
-    #     queryset = Order.objects.filter(user=request.user)
-    #
-    #     page = self.paginate_queryset(queryset)
-    #     if page is not None:
-    #         serializer = self.get_serializer(page, many=True)
-    #         return self.get_paginated_response(serializer.data)
-    #
-    #     serializer = self.get_serializer(queryset, many=True)
-    #
-    #     return Response(serializer, status=status.HTTP_200_OK)
-
 
 class OrderCreateView(generics.CreateAPIView):
     serializer_class = serializers.OrderCreateSerializer
