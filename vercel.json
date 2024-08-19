@@ -1,15 +1,22 @@
 {
-    "builds": [
-        {
-            "src": "CampusDroneBackend/wsgi.py",
-            "use": "@vercel/python",
-            "config": { "maxLambdaSize": "15mb", "runtime": "python3.10.0" }
-        }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "CampusDroneBackend/wsgi.py"
+  "version": 2,
+  "builds": [
+    {
+      "src": "requirements.txt",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "CampusDroneBackend/wsgi.py",
+      "use": "@vercel/python",
+      "env": {
+        "PYTHONPATH": "CampusDroneBackend"
       }
-    ]
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "CampusDroneBackend/wsgi.py"
+    }
+  ]
 }
