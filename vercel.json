@@ -7,10 +7,7 @@
     },
     {
       "src": "CampusDroneBackend/wsgi.py",
-      "use": "@vercel/python",
-      "env": {
-        "PYTHONPATH": "CampusDroneBackend"
-      }
+      "use": "@vercel/python"
     }
   ],
   "routes": [
