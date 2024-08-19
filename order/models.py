@@ -8,8 +8,8 @@ User = get_user_model()
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    lon = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.DecimalField(max_digits=20, decimal_places=16)
+    lon = models.DecimalField(max_digits=20, decimal_places=16)
     eta = models.CharField(max_length=10)  # Adjust length as needed
     created_at = models.DateTimeField(auto_now_add=True)
     payment_method = models.CharField(max_length=10,
@@ -17,14 +17,16 @@ class Order(models.Model):
                                               ('card', 'Card'),
                                               ('cash', 'Cash'),
                                               ('paypal', 'Paypal'),
-                                          )
+                                          ),
+                                      default='card'
                                       )
     status = models.CharField(max_length=10,
                               choices=(
                                       ('waiting', 'Waiting'),
                                       ('processing', 'Processing'),
                                       ('delivered', 'Delivered')
-                                  )
+                                  ),
+                              default='waiting'
                               )
 
     def __str__(self):

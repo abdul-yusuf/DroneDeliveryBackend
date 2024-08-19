@@ -2,6 +2,7 @@ from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from .models import Order, OrderItem
 
+
 class OrderItemSerializer(serializers.ModelSerializer):
     # product = serializers.PrimaryKeyRelatedField(read_only=True)
 
@@ -35,6 +36,8 @@ class OrderListSerializer(serializers.ModelSerializer):
     date = serializers.SerializerMethodField()
     price = serializers.SerializerMethodField()
     name = serializers.SerializerMethodField()
+    weight = serializers.SerializerMethodField()
+    status = serializers.SerializerMethodField()
     item = OrderItemSerializer(many=True)
 
     # image: "assets/images/product1.jpg"
@@ -46,7 +49,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['pk', 'name', 'lat', 'lon', 'eta', 'date', 'price', 'payment_method', 'item']
+        fields = ['pk', 'name', 'lat', 'lon', 'eta', 'date', 'price', 'payment_method', 'item', 'weight', 'status']
 
     @extend_schema_field(str)
     def get_date(self, obj):
@@ -54,7 +57,7 @@ class OrderListSerializer(serializers.ModelSerializer):
 
     @extend_schema_field(str)
     def get_price(self, obj):
-        price = sum([item.product.price*item.quantity for item in obj.item.get_queryset().all()])
+        price = sum([item.product.price * item.quantity for item in obj.item.get_queryset().all()])
 
         return price
 
@@ -63,3 +66,24 @@ class OrderListSerializer(serializers.ModelSerializer):
         items_name = ''.join(item.product.name for item in obj.item.get_queryset().all())
 
         return items_name
+
+    @extend_schema_field(str)
+    def get_weight(self, objs):
+        objs = objs.item.get_queryset().all()
+        weight = []
+        print(objs)
+        for obj in objs:
+            if obj.product.unit == 'kg':
+                weight.append((obj.product.weight*1000)*obj.quantity)
+            else:
+                weight.append(obj.product.weight*obj.quantity)
+        total = sum(weight)
+        if total >= 1000:
+            total = str(total)+' kg'
+        else:
+            total = str(total)+' gram'
+        return total
+
+    @extend_schema_field(str)
+    def get_status(self, obj):
+        return obj.status.upper()
