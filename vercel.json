@@ -2,10 +2,6 @@
   "version": 2,
   "builds": [
     {
-      "src": "requirements.txt",
-      "use": "@vercel/python"
-    },
-    {
       "src": "CampusDroneBackend/wsgi.py",
       "use": "@vercel/python"
     }
@@ -17,3 +13,4 @@
     }
   ]
 }
+
