@@ -1,1 +1,1 @@
-web: gunicorn CampusDroneBackend.wsgi
+
