@@ -4,14 +4,14 @@
             "src": "CampusDroneBackend/wsgi.py",
             "use": "@vercel/python",
             "config": { "maxLambdaSize": "15mb", "runtime": "python3.10.0" }
-        },
-        {
-            "src": "script.sh",
-            "use": "@vercel/static-build",
-            "config": {
-                "distDir": "static_root"
-            }
         }
+#        {
+#           "src": "script.sh",
+#            "use": "@vercel/static-build",
+#            "config": {
+#                "distDir": "static_root"
+#            }
+#        }
     ],
     "routes": [
       {
